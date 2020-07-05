@@ -1,5 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react'
+import Cell from './Cell'
 import produce from 'immer'
+import _ from 'lodash'
 
 const Context = React.createContext()
 
@@ -20,10 +22,10 @@ const i = 0
 const k = 0
 
 //Empty Grid
-const emptyGrid = () => {
+const createGrid = () => {
   const numRows = 20
   const numCols = 20
-    const rows = []
+  const rows = []
     for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => 0))
     }
@@ -33,9 +35,9 @@ const emptyGrid = () => {
 const ContextProvider = ({children}) => {
     //State
     const [grid, setGrid] = useState(() => {
-        return emptyGrid()
+        return createGrid()
     })
-
+    const [rows, setRows] = useState([])
     const [running, setRunning] = useState(false)
 
     //Ref
@@ -76,15 +78,13 @@ const ContextProvider = ({children}) => {
     
     //Random grid
     const shuffle = () => {
-        const rows = []
-
         for (let i = 0; i < numRows; i++) {
             rows.push(
             Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
             )
         }
-
-        setGrid(rows)
+        console.log(rows)
+        setRows(rows)
     }
 
     //Alive or dead toggle
@@ -95,9 +95,17 @@ const ContextProvider = ({children}) => {
         setGrid(newGrid)
     }
     
+    //Cell List
+    console.log(`rows: ${rows}`)
+    
+    let newGrid = _.chunk(rows, 20)
+    console.log(`New grid: ${newGrid}`)
+    let list = newGrid.map(row => row.map(col => <Cell key={Math.random(Math.floor() * 50)} />
+    ))
+    console.log(`list: ${list}`)
 
     return (
-        <Context.Provider value={{emptyGrid, shuffle, toggleCell, running, setRunning, runningRef, grid, setGrid, runSimulation, operations, i, k}}>
+        <Context.Provider value={{createGrid, shuffle, toggleCell, running, setRunning, runningRef, grid, setGrid, rows, setRows, runSimulation, operations, list, i, k}}>
             {children}
         </Context.Provider>
     )

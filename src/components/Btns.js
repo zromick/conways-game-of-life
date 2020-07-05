@@ -3,7 +3,7 @@ import {Context} from "./Context"
 
 const Btns = () => {
 
-    const {running, setRunning, runningRef, runSimulation, setGrid, shuffle, emptyGrid} = useContext(Context)
+    const {running, setRunning, runningRef, runSimulation, setGrid, shuffle, createGrid} = useContext(Context)
 
     return (
         <>
@@ -28,7 +28,7 @@ const Btns = () => {
             </button>
             <button
                 onClick={() => {
-                setGrid(emptyGrid())
+                setGrid(createGrid())
                 }}
             >
                 clear

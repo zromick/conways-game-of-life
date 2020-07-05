@@ -4,11 +4,13 @@ import {Context} from "./Context"
 
 const CellContainer = () => {
 
-    const {grid, i, k} = useContext(Context)
+    const {grid, list, rows, i, k} = useContext(Context)
 
-    const list = grid.map((rows, i) => rows.map((col, k) => {
-        return <Cell key={Math.random(Math.floor() * 50)} />
-     }))
+    console.log(`Grid: ${grid}`)
+    console.log(`Rows: ${rows}`)
+    // const list = grid.map((rows, i) => rows.map((col, k) => {
+    //     return <Cell key={Math.random(Math.floor() * 50)} />
+    //  }))
 
     return (
         <div>

@@ -13,7 +13,7 @@ const Cell = ({id}) => {
               style={{
                 width: 20,
                 height: 20,
-                backgroundColor: grid[i][k] ? "pink" : undefined,
+                // backgroundColor: grid[i][k] ? "pink" : undefined,
                 border: "solid 1px grey"
               }}
             />
