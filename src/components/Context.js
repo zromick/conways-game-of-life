@@ -102,7 +102,7 @@ const ContextProvider = ({ children }) => {
         return <Cell
           rowIndex={rowIndex}
           colIndex={colIndex}
-          grid={grid}
+          newGrid={grid}
           key={Math.random(Math.floor() * 50)}
         />
       })

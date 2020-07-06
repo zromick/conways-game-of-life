@@ -9,15 +9,10 @@ const Btns = ({ rowIndex, colIndex, newGrid }) => {
         <>
             <button
                 onClick={() => {
-                    setRunning(!running)
-                    if (!running) {
-                        runningRef.current = true;
-                        // runSimulation()
-                        advanceSimulation(rowIndex, colIndex, newGrid);
-                    }
+                    advanceSimulation(rowIndex, colIndex, newGrid);
                 }}
             >
-                {running ? "stop" : "start"}
+                {"advance"}
             </button>
 
             <button
