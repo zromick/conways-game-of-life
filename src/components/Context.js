@@ -25,9 +25,9 @@ const i = 0
 const k = 0
 
 //Empty Grid
-const createGrid = () => {
+const createGrid = (setGridArray) => {
   let isBlankGrid = true;
-  return shuffle(isBlankGrid);
+  return shuffle(isBlankGrid, setGridArray);
   // const numRows = 20
   // const numCols = 20
   // const rows = []
@@ -38,7 +38,7 @@ const createGrid = () => {
 }
 
 //Random grid
-const shuffle = (isBlankGrid) => {
+const shuffle = (isBlankGrid, setGridArray) => {
   let newGrid = [];
   let newRow = [];
   for (let i = 0; i < numRows; i++) {
@@ -50,6 +50,8 @@ const shuffle = (isBlankGrid) => {
     newRow = [];
   }
   console.log(`newGrid:`, newGrid)
+
+  setGridArray(newGrid);
 
   let newRows = newGrid.map((row, rowIndex) => {
     let items = row.map((col, colIndex) => {
@@ -82,9 +84,12 @@ const shuffle = (isBlankGrid) => {
 
 const ContextProvider = ({ children }) => {
   //State
+  const [gridArray, setGridArray] = useState(() => []);
   const [grid, setGrid] = useState(() => {
-    return createGrid();
+    return createGrid(setGridArray);
   })
+  const [rowIndex, changeRowIndex] = useState(() => 0);
+  const [colIndex, changeColIndex] = useState(() => 0);
   const [rows, setRows] = useState([]);
   const [isBlankGrid, blankGrid] = useState(true);
   const [running, setRunning] = useState(false);
@@ -96,9 +101,10 @@ const ContextProvider = ({ children }) => {
   //Alive or dead toggle
 
   const generateGrid = (grid) => {
-    console.log("generateGrid -> grid", grid)
     let newRows = grid.map((row, rowIndex) => {
       let items = row.map((col, colIndex) => {
+        changeRowIndex(rowIndex);
+        changeColIndex(colIndex);
         return <Cell
           rowIndex={rowIndex}
           colIndex={colIndex}
@@ -129,14 +135,13 @@ const ContextProvider = ({ children }) => {
       ? newGrid[rowIndex][colIndex] = 0
       : newGrid[rowIndex][colIndex] = 1;
     console.log(`newGrid: `, newGrid);
-    console.log("this is the list", list);
     setGrid(generateGrid(newGrid));
   }
 
   const advanceSimulation = (rowIndex, colIndex, grid) => {
     blankGrid(false);
 
-    const gridCopy = grid;
+    let gridCopy = grid;
 
     for (let i = 0; i < numRows; i++) {
       for (let k = 0; k < numCols; k++) {
@@ -156,19 +161,22 @@ const ContextProvider = ({ children }) => {
         }
       }
     }
+
+    console.log("our grids", grid, gridCopy);
     // newGrid = produce(newGrid, gridCopy => {
     //   gridCopy[rowIndex][colIndex] = grid[rowIndex][colIndex] ? 0 : 1
     // })
-    setGrid(gridCopy);
-    // list = shuffle(isBlankGrid);
-    // setGrid(list);
-    console.log("this is the list", list);
+    setGrid(generateGrid(gridCopy));
   }
 
 
 
   return (
     <Context.Provider value={{
+      rowIndex,
+      colIndex,
+      gridArray,
+      setGridArray,
       createGrid,
       shuffle,
       toggleCell,

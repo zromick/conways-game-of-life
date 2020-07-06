@@ -1,15 +1,16 @@
 import React, { useContext } from 'react'
 import { Context } from "./Context"
 
-const Btns = ({ rowIndex, colIndex, newGrid }) => {
+const Btns = () => {
 
-    const { running, setRunning, runningRef, runSimulation, advanceSimulation, setGrid, shuffle, createGrid } = useContext(Context)
+    // const { running, setRunning, runningRef, runSimulation, advanceSimulation, setGrid, shuffle, createGrid } = useContext(Context)
+    const { rowIndex, colIndex, gridArray, setGridArray, advanceSimulation, setGrid, shuffle, createGrid } = useContext(Context)
 
     return (
         <>
             <button
                 onClick={() => {
-                    advanceSimulation(rowIndex, colIndex, newGrid);
+                    advanceSimulation(rowIndex, colIndex, gridArray);
                 }}
             >
                 {"advance"}
@@ -18,7 +19,7 @@ const Btns = ({ rowIndex, colIndex, newGrid }) => {
             <button
                 onClick={() => {
                     let isBlankGrid = false;
-                    setGrid(shuffle(isBlankGrid))
+                    setGrid(shuffle(isBlankGrid, setGridArray))
                 }}
             >
                 random
