@@ -4,13 +4,13 @@ import { Context } from "./Context"
 const Btns = () => {
 
     // const { running, setRunning, runningRef, runSimulation, advanceSimulation, setGrid, shuffle, createGrid } = useContext(Context)
-    const { rowIndex, colIndex, gridArray, setGridArray, advanceSimulation, setGrid, shuffle, createGrid } = useContext(Context)
+    const { gridArray, setGridArray, advanceSimulation, setGrid, shuffle, createGrid } = useContext(Context)
 
     return (
         <>
             <button
                 onClick={() => {
-                    advanceSimulation(rowIndex, colIndex, gridArray);
+                    advanceSimulation(gridArray);
                 }}
             >
                 {"advance"}
@@ -26,7 +26,7 @@ const Btns = () => {
             </button>
             <button
                 onClick={() => {
-                    setGrid(createGrid())
+                    setGrid(createGrid(setGridArray))
                 }}
             >
                 clear

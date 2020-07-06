@@ -1,7 +1,5 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import Cell from './Cell';
-import produce from 'immer';
-import _ from 'lodash';
 import { Grid } from '@material-ui/core';
 
 const Context = React.createContext()
@@ -28,13 +26,6 @@ const k = 0
 const createGrid = (setGridArray) => {
   let isBlankGrid = true;
   return shuffle(isBlankGrid, setGridArray);
-  // const numRows = 20
-  // const numCols = 20
-  // const rows = []
-  // for (let i = 0; i < numRows; i++) {
-  //   rows.push(Array.from(Array(numCols), () => 0))
-  // }
-  // return rows
 }
 
 //Random grid
@@ -46,7 +37,6 @@ const shuffle = (isBlankGrid, setGridArray) => {
       newRow.push((isBlankGrid ? 0 : (Math.random() > 0.7 ? 1 : 0)));
     }
     newGrid[i] = newRow;
-    // newGrid.push(newRow);
     newRow = [];
   }
   console.log(`newGrid:`, newGrid)
@@ -138,11 +128,13 @@ const ContextProvider = ({ children }) => {
     setGrid(generateGrid(newGrid));
   }
 
-  const advanceSimulation = (rowIndex, colIndex, grid) => {
+  const advanceSimulation = (grid) => {
     blankGrid(false);
 
     let gridCopy = grid;
 
+
+    // gridCopy[rowIndex][colIndex] += 1;
     for (let i = 0; i < numRows; i++) {
       for (let k = 0; k < numCols; k++) {
         let neighbors = 0;
@@ -155,9 +147,9 @@ const ContextProvider = ({ children }) => {
         })
 
         if (neighbors < 2 || neighbors > 3) {
-          gridCopy[rowIndex][colIndex] = 0
-        } else if (grid[rowIndex][colIndex] === 0 && neighbors === 3) {
-          gridCopy[rowIndex][colIndex] = 1
+          gridCopy[i][k] = 0
+        } else if (grid[i][k] === 0 && neighbors === 3) {
+          gridCopy[i][k] = 1
         }
       }
     }
@@ -166,6 +158,7 @@ const ContextProvider = ({ children }) => {
     // newGrid = produce(newGrid, gridCopy => {
     //   gridCopy[rowIndex][colIndex] = grid[rowIndex][colIndex] ? 0 : 1
     // })
+    setGridArray(gridCopy);
     setGrid(generateGrid(gridCopy));
   }
 
@@ -188,7 +181,6 @@ const ContextProvider = ({ children }) => {
       setGrid,
       rows,
       setRows,
-      // runSimulation,
       operations,
       list,
       i,

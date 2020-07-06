@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
-import Cell from './Cell'
-import { Context } from "./Context"
+import React, { useContext } from 'react';
+import { Context } from "./Context";
 
 const CellContainer = () => {
 

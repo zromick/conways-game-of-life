@@ -4,7 +4,7 @@ import { Context } from "./Context"
 
 const Cell = ({ rowIndex, colIndex, newGrid, key }) => {
 
-  const { toggleCell, grid, i, k } = useContext(Context)
+  const { toggleCell } = useContext(Context)
 
   return (
     <div
