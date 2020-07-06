@@ -9,7 +9,7 @@ const Cell = ({ rowIndex, colIndex, newGrid, key }) => {
   return (
     <div
       key={key}
-      onClick={toggleCell}
+      onClick={() => toggleCell(rowIndex, colIndex, newGrid)}
       style={{
         width: 20,
         height: 20,

@@ -1,9 +1,9 @@
-import React, {useContext} from 'react'
-import {Context} from "./Context"
+import React, { useContext } from 'react'
+import { Context } from "./Context"
 
-const Btns = () => {
+const Btns = ({ rowIndex, colIndex, newGrid }) => {
 
-    const {running, setRunning, runningRef, runSimulation, setGrid, shuffle, createGrid} = useContext(Context)
+    const { running, setRunning, runningRef, runSimulation, advanceSimulation, setGrid, shuffle, createGrid } = useContext(Context)
 
     return (
         <>
@@ -12,23 +12,25 @@ const Btns = () => {
                     setRunning(!running)
                     if (!running) {
                         runningRef.current = true;
-                        runSimulation()
+                        // runSimulation()
+                        advanceSimulation(rowIndex, colIndex, newGrid);
                     }
-                    }}
+                }}
             >
-                        {running ? "stop" : "start"}
+                {running ? "stop" : "start"}
             </button>
 
             <button
                 onClick={() => {
-                    setGrid(shuffle())
+                    let isBlankGrid = false;
+                    setGrid(shuffle(isBlankGrid))
                 }}
             >
                 random
             </button>
             <button
                 onClick={() => {
-                setGrid(createGrid())
+                    setGrid(createGrid())
                 }}
             >
                 clear
