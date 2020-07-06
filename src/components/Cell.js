@@ -1,23 +1,23 @@
-import React, {useContext} from 'react'
-import {Context} from "./Context"
+import React, { useContext } from 'react'
+import { Context } from "./Context"
 
 
-const Cell = ({id}) => {
+const Cell = ({ rowIndex, colIndex, newGrid, key }) => {
 
-    const {toggleCell, grid, i, k} = useContext(Context)
+  const { toggleCell, grid, i, k } = useContext(Context)
 
-    return (
-        <div
-              key={id}
-              onClick={toggleCell}
-              style={{
-                width: 20,
-                height: 20,
-                // backgroundColor: grid[i][k] ? "pink" : undefined,
-                border: "solid 1px grey"
-              }}
-            />
-    )
+  return (
+    <div
+      key={key}
+      onClick={toggleCell}
+      style={{
+        width: 20,
+        height: 20,
+        backgroundColor: newGrid[rowIndex][colIndex] ? "pink" : undefined,
+        border: "solid 1px grey"
+      }}
+    />
+  )
 }
 
 export default Cell
