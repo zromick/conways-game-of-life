@@ -1,14 +1,9 @@
-import React, { useContext } from 'react'
-import { Context } from "./Context"
+import React from 'react';
 
-
-const Cell = ({ rowIndex, colIndex, newGrid, key }) => {
-
-  const { toggleCell } = useContext(Context)
+const Cell = ({ rowIndex, colIndex, newGrid, toggleCell }) => {
 
   return (
     <div
-      key={key}
       onClick={() => toggleCell(rowIndex, colIndex, newGrid)}
       style={{
         width: 20,
@@ -20,4 +15,4 @@ const Cell = ({ rowIndex, colIndex, newGrid, key }) => {
   )
 }
 
-export default Cell
+export default Cell;

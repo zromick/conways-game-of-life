@@ -1,15 +1,10 @@
-import React from 'react'
-import { ContextProvider } from "./components/Context"
-import Grid from './components/Grid'
-import Btns from './components/Btns'
+import React from 'react';
+import GameOfLife from './components/GameOfLife';
 
 const App = () => {
   return (
-    <ContextProvider>
-      <Grid />
-      <Btns />
-    </ContextProvider>
+    <GameOfLife />
   )
 }
 
-export default App
+export default App;
