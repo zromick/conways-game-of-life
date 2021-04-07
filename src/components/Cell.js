@@ -6,8 +6,8 @@ const Cell = ({ rowIndex, colIndex, newGrid, toggleCell }) => {
     <div
       onClick={() => toggleCell(rowIndex, colIndex, newGrid)}
       style={{
-        width: 20,
-        height: 20,
+        width: 10,
+        height: 10,
         backgroundColor: newGrid[rowIndex][colIndex] ? "pink" : undefined,
         border: "solid 1px grey"
       }}

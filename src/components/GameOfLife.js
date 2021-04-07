@@ -40,7 +40,6 @@ const GameOfLife = () => {
       newRow = [];
     }
     if (gridType === "gosper-gun") {
-      console.log(`gps`, GosperGun());
       let gosperGrid = GosperGun();
       for (let i = 0; i < gosperGrid.length; i++) {
         newGrid[gosperGrid[i][0]][gosperGrid[i][1]] = 1;
