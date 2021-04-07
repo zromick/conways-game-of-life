@@ -1,30 +1,39 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 
-const Buttons = ({ gridArray, setGridArray, advanceSimulation, setGrid, shuffle, createGrid }) => {
+const Buttons = ({ gridArray, setGridArray, advanceSimulation, setGrid, selectGridType, createGrid }) => {
 
     return (
-        <>
-            <Button color="primary" variant="outlined"
-                onClick={() => advanceSimulation(gridArray)}
-            >
-                Advance Simulation
-            </Button>
-
-            <Button color="primary" variant="outlined"
-                onClick={() => {
-                    let isBlankGrid = false;
-                    setGrid(shuffle(isBlankGrid, setGridArray));
-                }}
-            >
-                Randomize Live Cells
-            </Button>
-            <Button color="primary" variant="outlined"
-                onClick={() => setGrid(createGrid(setGridArray))}
-            >
-                Clear Simulation
-            </Button>
-        </>
+        <Grid container item xs={12} justify="space-around">
+            <Grid item xs={3}>
+                <Button color="primary" variant="outlined"
+                    onClick={() => advanceSimulation(gridArray)}
+                >
+                    Advance Simulation
+                </Button>
+            </Grid>
+            <Grid item xs={3}>
+                <Button color="primary" variant="outlined"
+                    onClick={() => setGrid(selectGridType("random", setGridArray))}
+                >
+                    Randomize Live Cells
+                </Button>
+            </Grid>
+            <Grid item xs={3}>
+                <Button color="primary" variant="outlined"
+                    onClick={() => setGrid(selectGridType("gosper-gun", setGridArray))}
+                >
+                    Create Gosper Gun
+                </Button>
+            </Grid>
+            <Grid item xs={3}>
+                <Button color="primary" variant="outlined"
+                    onClick={() => setGrid(selectGridType("blank", setGridArray))}
+                >
+                    Clear Simulation
+                </Button>
+            </Grid>
+        </Grid>
     )
 }
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Buttons from './Buttons';
 import GameGrid from './GameGrid';
+import { Grid } from '@material-ui/core';
+import { GosperGun } from './Patterns';
 
 const operations = [
   [0, 1],
@@ -13,8 +15,8 @@ const operations = [
   [-1, 0]
 ];
 
-const numRows = 20;
-const numCols = 20;
+const numRows = 40;
+const numCols = 40;
 
 const GameOfLife = () => {
 
@@ -26,22 +28,23 @@ const GameOfLife = () => {
     setGrid(generateGrid(newGrid));
   }
 
-  //Empty Grid
-  const createGrid = (setGridArray) => {
-    let isBlankGrid = true;
-    return shuffle(isBlankGrid, setGridArray);
-  }
-
-  // Random grid
-  const shuffle = (isBlankGrid, setGridArray) => {
+  // Create A New Grid Based on Input Type
+  const selectGridType = (gridType, setGridArray) => {
     let newGrid = [];
     let newRow = [];
     for (let i = 0; i < numRows; i++) {
       for (let j = 0; j < numCols; j++) {
-        newRow.push((isBlankGrid ? 0 : (Math.random() > 0.7 ? 1 : 0)));
+        newRow.push((gridType === "random" ? (Math.random() > 0.7 ? 1 : 0) : 0));
       }
       newGrid[i] = newRow;
       newRow = [];
+    }
+    if (gridType === "gosper-gun") {
+      console.log(`gps`, GosperGun());
+      let gosperGrid = GosperGun();
+      for (let i = 0; i < gosperGrid.length; i++) {
+        newGrid[gosperGrid[i][0]][gosperGrid[i][1]] = 1;
+      }
     }
 
     setGridArray(newGrid);
@@ -51,7 +54,7 @@ const GameOfLife = () => {
   // Set State
   const [gridArray, setGridArray] = useState(() => []);
   const [grid, setGrid] = useState(() => {
-    return createGrid(setGridArray);
+    return selectGridType("blank", setGridArray);
   });
 
   // Grid Generation
@@ -68,17 +71,17 @@ const GameOfLife = () => {
       for (let k = 0; k < numCols; k++) {
         let neighbors = 0;
         operations.forEach(([x, y]) => {
-          const newI = i + x
-          const newK = k + y
+          const newI = i + x;
+          const newK = k + y;
           if (newI >= 0 && newI < numRows && newK >= 0 && newK < numCols) {
-            neighbors += grid[newI][newK]
+            neighbors += grid[newI][newK];
           }
         })
 
         if (neighbors < 2 || neighbors > 3) {
-          gridCopy[i][k] = 0
+          gridCopy[i][k] = 0;
         } else if (grid[i][k] === 0 && neighbors === 3) {
-          gridCopy[i][k] = 1
+          gridCopy[i][k] = 1;
         }
       }
     }
@@ -88,17 +91,18 @@ const GameOfLife = () => {
   }
 
   return (
-    <div>
-      {grid}
+    <Grid container justify="center">
+      <Grid item>
+        {grid}
+      </Grid>
       <Buttons
         gridArray={gridArray}
         setGridArray={setGridArray}
         advanceSimulation={advanceSimulation}
         setGrid={setGrid}
-        shuffle={shuffle}
-        createGrid={createGrid}
+        selectGridType={selectGridType}
       />
-    </div>
+    </Grid>
   )
 }
 
