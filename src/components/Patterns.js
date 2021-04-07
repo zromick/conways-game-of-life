@@ -1,4 +1,4 @@
-// Coordinates for live cells in a Gosper Gun pattern
+// GosperGun: Defines coordinates for live cells in the famous Gosper Gun pattern.
 export const GosperGun = () => {
   return ([
     [5, 1],

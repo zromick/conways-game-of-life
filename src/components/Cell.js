@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Cell: Defines the visual layout of a cell and allows for cell toggling.
 const Cell = ({ rowIndex, colIndex, newGrid, toggleCell }) => {
 
   return (

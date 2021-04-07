@@ -18,9 +18,15 @@ const operations = [
 const numRows = 40;
 const numCols = 40;
 
+// GameOfLife: Creates a grid that allows for simulation Conway's Game of Life.
 const GameOfLife = () => {
 
-  // Cell Toggle Dead or Alive
+  // generateGrid: Build a visual layout for the given grid and set the new state.
+  const generateGrid = (newGrid) => {
+    return <GameGrid grid={newGrid} toggleCell={toggleCell} />;
+  }
+
+  // toggleCell: toggles whether a cell is dead or alive
   const toggleCell = (rowIndex, colIndex, newGrid) => {
     newGrid[rowIndex][colIndex]
       ? newGrid[rowIndex][colIndex] = 0
@@ -28,8 +34,8 @@ const GameOfLife = () => {
     setGrid(generateGrid(newGrid));
   }
 
-  // Create A New Grid Based on Input Type
-  const selectGridType = (gridType, setGridArray) => {
+  // selectGridType: Creates a new grid based on input type. Default is blank.
+  const selectGridType = (gridType, setGridArray, gridArray) => {
     let newGrid = [];
     let newRow = [];
     for (let i = 0; i < numRows; i++) {
@@ -45,24 +51,23 @@ const GameOfLife = () => {
         newGrid[gosperGrid[i][0]][gosperGrid[i][1]] = 1;
       }
     }
+    else if (gridType === "advance") {
+      newGrid = advanceSimulation(gridArray);
+    }
 
     setGridArray(newGrid);
-    return <GameGrid grid={newGrid} toggleCell={toggleCell} />;
+    return generateGrid(newGrid);
   }
 
-  // Set State
+  // setGridArray: Sets the original array model of the grid and manages all future grid changes.
   const [gridArray, setGridArray] = useState(() => []);
+
+  // setGrid: Sets the original visual layout of the grid and manages all future grid changes.
   const [grid, setGrid] = useState(() => {
-    return selectGridType("blank", setGridArray);
+    return selectGridType("blank", setGridArray, []);
   });
 
-  // Grid Generation
-  const generateGrid = (grid) => {
-    return <GameGrid grid={grid} toggleCell={toggleCell} />
-  }
-
-  // Advance Simulation By One Step
-  // Uses John Horton Conway's algorithm
+  // advanceSimulation: Advance the simulation by one iteration of Conway's algorithm.
   const advanceSimulation = (grid) => {
     let gridCopy = grid;
 
@@ -85,8 +90,7 @@ const GameOfLife = () => {
       }
     }
 
-    setGridArray(gridCopy);
-    setGrid(generateGrid(gridCopy));
+    return gridCopy;
   }
 
   return (
@@ -97,7 +101,6 @@ const GameOfLife = () => {
       <Buttons
         gridArray={gridArray}
         setGridArray={setGridArray}
-        advanceSimulation={advanceSimulation}
         setGrid={setGrid}
         selectGridType={selectGridType}
       />

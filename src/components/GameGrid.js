@@ -2,6 +2,7 @@ import React from 'react';
 import Cell from './Cell';
 import { Grid } from '@material-ui/core';
 
+// GameGrid: Defines the visual layout of rows and cells based on the given grid array.
 const GameGrid = ({ grid, toggleCell }) => {
   let newRows = grid.map((row, rowIndex) => {
     let items = row.map((col, colIndex) => {
