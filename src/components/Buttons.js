@@ -1,15 +1,16 @@
 import React from 'react';
 import { Button, Grid, Tooltip } from '@material-ui/core';
+import styles from '../styles.module.scss';
 
 // Buttons: Defines the visual button elements at the bottom of the screen.
 const Buttons = ({ gridArray, setGridArray, setGrid, selectGridType }) => {
 
     return (
         <Grid container item xs={12}>
-            <Grid container item justify="center" xs={3}>
+            <Grid container item justify="center" xs={3} className={styles.buttonMargin}>
                 <Tooltip title="Advance the simulation by a single step." arrow>
                     <Button color="primary" variant="outlined"
-                        onClick={() => setGrid(selectGridType("advance", setGridArray, gridArray))}
+                        onClick={() => setGrid(selectGridType("advanceSimulation", setGridArray, gridArray))}
                     >
                         Advance Simulation
                     </Button>

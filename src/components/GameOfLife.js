@@ -3,6 +3,7 @@ import Buttons from './Buttons';
 import GameGrid from './GameGrid';
 import { Grid } from '@material-ui/core';
 import { GosperGun } from './Patterns';
+import styles from '../styles.module.scss';
 
 const operations = [
   [0, 1],
@@ -51,7 +52,7 @@ const GameOfLife = () => {
         newGrid[gosperGrid[i][0]][gosperGrid[i][1]] = 1;
       }
     }
-    else if (gridType === "advance") {
+    else if (gridType === "advanceSimulation") {
       newGrid = advanceSimulation(gridArray);
     }
 
@@ -69,7 +70,7 @@ const GameOfLife = () => {
 
   // advanceSimulation: Advance the simulation by one iteration of Conway's algorithm.
   const advanceSimulation = (grid) => {
-    let gridCopy = grid;
+    let gridCopy = JSON.parse(JSON.stringify(grid));
 
     for (let i = 0; i < numRows; i++) {
       for (let k = 0; k < numCols; k++) {
@@ -79,6 +80,7 @@ const GameOfLife = () => {
           const newK = k + y;
           if (newI >= 0 && newI < numRows && newK >= 0 && newK < numCols) {
             neighbors += grid[newI][newK];
+            console.log()
           }
         })
 
@@ -96,7 +98,9 @@ const GameOfLife = () => {
   return (
     <Grid container justify="center">
       <Grid item>
-        {grid}
+        <div className={styles.gridMargin}>
+          {grid}
+        </div>
       </Grid>
       <Buttons
         gridArray={gridArray}
